@@ -1,0 +1,32 @@
+version: '2'
+
+networks:
+    pinet:
+        driver: bridge
+services:
+  app:
+    image: tianon/true
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./tmp/logs:/root/.npm/_logs
+    container_name: aipi-app
+    networks:
+      - pinet
+  server:
+    build: ./app
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./tmp/logs:/root/.npm/_logs
+    environment:
+      - NODE_ENV=production
+    container_name: aipi-server
+    ports:
+      - 3000:3000
+    networks:
+      - pinet
+
+volumes:
+  server:
+      driver: "local"
