@@ -7,6 +7,10 @@ noble.on('stateChange', (state) => {
     }
 })
 
+noble.on('discover', (peripheral) => {
+    console.log(peripheral)
+})
+
 import pkg from '../package.json'
 import app from './server'
 
