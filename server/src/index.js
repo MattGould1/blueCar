@@ -2,6 +2,7 @@
 import noble from 'noble'
 
 noble.on('stateChange', (state) => {
+    console.log(state)
     if (state == 'poweredOn') {
         noble.startScanning([], true)
     }
