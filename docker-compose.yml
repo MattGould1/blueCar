@@ -1,0 +1,22 @@
+version: '2'
+
+networks:
+    carnet:
+        driver: bridge
+services:
+  server:
+    build: ./server
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=production
+    container_name: bluecar-server
+    ports:
+      - 3000:3000
+    networks:
+      - carnet
+
+volumes:
+  server:
+      driver: "local"
