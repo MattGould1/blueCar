@@ -1,7 +1,11 @@
 'use strict'
 import noble from 'noble'
 
-noble.startScanning([], true)
+noble.on('stateChange', (state) => {
+    if (state == 'poweredOn') {
+        noble.startScanning([], true)
+    }
+})
 
 import pkg from '../package.json'
 import app from './server'
