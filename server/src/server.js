@@ -1,8 +1,12 @@
 import express from 'express'
 import BodyParser from 'body-parser'
-import http from 'http' 
-import dualShock from 'dualshock-controller'
+import http from 'http'
 import _ from 'underscore'
+
+import noble from 'noble'
+
+noble.startScanning();
+
 
 /*
     Our restful routes will be housed here
@@ -88,113 +92,44 @@ var server = http.createServer(app)
 */
 var sio = socketio(server)
 
-var controller = dualShock(
-    {
-        //you can use a ds4 by uncommenting this line. 
-        //config: "dualshock4-generic-driver", 
-        //if using ds4 comment this line. 
-        config : "dualShock3",
-        //smooths the output from the acelerometers (moving averages) defaults to true 
-        accelerometerSmoothing : true,
-        //smooths the output from the analog sticks (moving averages) defaults to false 
-        analogStickSmoothing : false
-    });
-
-
-//make sure you add an error event handler 
-controller.on('error', err => console.log(err));
-
-//DualShock 4 control rumble and light settings for the controller 
-controller.setExtras({
- rumbleLeft:  0,   // 0-255 (Rumble left intensity) 
- rumbleRight: 0,   // 0-255 (Rumble right intensity) 
- red:         0,   // 0-255 (Red intensity) 
- green:       75,  // 0-255 (Blue intensity) 
- blue:        225, // 0-255 (Green intensity) 
- flashOn:     40,  // 0-255 (Flash on time) 
- flashOff:    10   // 0-255 (Flash off time) 
-});
-
-//DualShock 3 control rumble and light settings for the controller 
-controller.setExtras({
- rumbleLeft:  0,   // 0-1 (Rumble left on/off) 
- rumbleRight: 0,   // 0-255 (Rumble right intensity) 
- led: 2 // 2 | 4 | 8 | 16 (Leds 1-4 on/off, bitmasked) 
-});
-
-//add event handlers: 
-controller.on('left:move', data => console.log('left Moved: ' + data.x + ' | ' + data.y));
-
-controller.on('right:move', data => console.log('right Moved: ' + data.x + ' | ' + data.y));
-
-controller.on('connected', () => console.log('connected'));
-
-controller.on('square:press', ()=> console.log('square press'));
-
-controller.on('square:release', () => console.log('square release'));
-
-//sixasis motion events: 
-//the object returned from each of the movement events is as follows: 
-//{ 
-//    direction : values can be: 1 for right, forward and up. 2 for left, backwards and down. 
-//    value : values will be from 0 to 120 for directions right, forward and up and from 0 to -120 for left, backwards and down. 
-//} 
-
-//DualShock 4 TouchPad 
-//finger 1 is x1 finger 2 is x2 
-controller.on('touchpad:x1:active', () => console.log('touchpad one finger active'));
-
-controller.on('touchpad:x2:active', () => console.log('touchpad two fingers active'));
-
-controller.on('touchpad:x2:inactive', () => console.log('touchpad back to single finger'));
-
-controller.on('touchpad:x1', data => console.log('touchpad x1:', data.x, data.y));
-
-controller.on('touchpad:x2', data => console.log('touchpad x2:', data.x, data.y));
-
-
-//right-left movement 
-controller.on('rightLeft:motion', data => console.log(data));
-
-
 /*
     Whenever a client connects, anything inside 'connection' will be run, in our case
     1) the drive socket becomes available
     2) an interval is set and the server emits a string to the client
 */
-// sio.on('connection', function (socket) {
-// 	/*
-//         the drive socket allows the client to control the raspberry pi pins
-// 	*/
-// 	socket.on('drive', function (data) {
-// 		if (!process.env.production) {
-// 			console.log(data)
-//         }
-//         /*
-//             We aren't using pulse width modulation yet, just set the pin to full on, or full off
-//         */
-// 		const speed = (data['speed']) ? rpio.HIGH : rpio.LOW
-// 		const pin = pins.drive[data['direction']]
+sio.on('connection', function (socket) {
+	/*
+        the drive socket allows the client to control the raspberry pi pins
+	*/
+	socket.on('drive', function (data) {
+		if (!process.env.production) {
+			console.log(data)
+        }
+        /*
+            We aren't using pulse width modulation yet, just set the pin to full on, or full off
+        */
+		const speed = (data['speed']) ? rpio.HIGH : rpio.LOW
+		const pin = pins.drive[data['direction']]
 
-// 		console.log(pin);
-// 		console.log(speed);
+		console.log(pin);
+		console.log(speed);
 
-// 		rpio.write(pin, speed)
-// 	})
+		rpio.write(pin, speed)
+	})
 
-//     /*
-//         Just randomness, make sure the client is connected
-//     */
-// 	setInterval(function () {
-// 		socket.emit('helloworld', 'hello world')
-// 	}, 2000)
-// })
+    /*
+        Just randomness, make sure the client is connected
+    */
+	setInterval(function () {
+		socket.emit('helloworld', 'hello world')
+	}, 2000)
+})
 
-// /*
-//     finally start listening for outside requests
-// */
-// server.listen(3000, function () {
-// 	console.log('app is listening on port 3000')
-// })
+/*
+    finally start listening for outside requests
+*/
+server.listen(3000, function () {
+	console.log('app is listening on port 3000')
+})
 
 export default app

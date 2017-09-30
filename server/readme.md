@@ -95,8 +95,12 @@ _Get the latest News about Web Development, Open Source, Tooling, Server & Secur
 [![Google+](https://github.frapsoft.com/social/google-plus.png)](https://plus.google.com/116540931335841862774)
 [![Gitter](https://github.frapsoft.com/social/gitter.png)](https://gitter.im/frapsoft/frapsoft/)
 
-### License
+### build stuff
 
-Copyright (c) 2016 [Maik Ellerbrock](https://github.com/ellerbrock/)
+sudo apt-get install libudev-dev libusb-1.0-0 libusb-1.0-0-dev build-essential git
+sudo apt-get install bluez-utils bluez-compat bluez-hcidump checkinstall libusb-dev libbluetooth-dev joystick
+install npm/node
+npm install -g node-gyp node-pre-gyp
 
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit-125x28.png?v=102)](https://opensource.org/licenses/mit-license.php)
+npm install node-hid --driver=hidraw --build-from-source
+
