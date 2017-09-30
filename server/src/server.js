@@ -11,6 +11,10 @@ var devices = hid.devices()
 
 console.log(devices)
 
+var device = hid.HID(devices[0].path)
+
+console.log(device)
+
 noble.state = 'poweredOn'
 noble.startScanning();
 
