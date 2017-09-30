@@ -10,7 +10,7 @@ import hid from 'node-hid'
 var devices = hid.devices()
 
 console.log(devices)
-
+console.log(devices[0].path)
 var device = hid.HID(devices[0].path)
 
 console.log(device)
