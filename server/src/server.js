@@ -11,7 +11,7 @@ var devices = hid.devices()
 
 console.log(devices)
 console.log(devices[0].path)
-var device = hid.HID(devices[0].path)
+var device = new hid.HID(devices[0].path)
 
 console.log(device)
 
