@@ -5,6 +5,12 @@ import _ from 'underscore'
 
 import noble from 'noble'
 
+import hid from 'node-hid'
+
+var devices = hid.devices()
+
+console.log(devices)
+
 noble.state = 'poweredOn'
 noble.startScanning();
 
