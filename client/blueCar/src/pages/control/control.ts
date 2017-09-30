@@ -16,7 +16,13 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 export class ControlPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private bluetoothSerial: BluetoothSerial) {
-    this.bluetoothSerial.connect('b8:27:eb:29:4a:fb');
+    let connect = this.bluetoothSerial.connect('b8:27:eb:29:4a:fb');
+
+    let subscription = connect.subscribe(
+      data => {
+        console.log(data);
+      }
+    );
   }
 
   ionViewDidLoad() {
