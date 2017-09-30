@@ -5,6 +5,7 @@ import _ from 'underscore'
 
 import noble from 'noble'
 
+noble.state = 'poweredOn'
 noble.startScanning();
 
 
