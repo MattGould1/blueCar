@@ -5,18 +5,6 @@ import _ from 'underscore'
 
 import noble from 'noble'
 
-import hid from 'node-hid'
-
-var devices = hid.devices()
-
-console.log(devices)
-console.log(devices[0].path)
-var device = new hid.HID(devices[0].path)
-
-console.log(device)
-
-console.log(device.getDeviceInfo())
-
 
 noble.state = 'poweredOn'
 var serviceUUIDs = []
