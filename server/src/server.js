@@ -17,7 +17,6 @@ console.log(device)
 
 console.log(device.getDeviceInfo())
 
-console.log(device.getFeatureReport())
 
 noble.state = 'poweredOn'
 var serviceUUIDs = []
