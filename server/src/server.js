@@ -24,9 +24,9 @@ noble.startScanning(serviceUUIDs, false, (err) => {
     console.log(serviceUUIDs);
 });
 
-
-setInterval(() => { console.log(serviceUUIDs) }, 3000)
-
+noble.on('discover', (peripheral) => {
+    console.log(peripheral)
+});
 
 /*
     Our restful routes will be housed here
