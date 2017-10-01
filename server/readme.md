@@ -97,10 +97,18 @@ _Get the latest News about Web Development, Open Source, Tooling, Server & Secur
 
 ### build stuff
 
+sudo apt-get -y install libusb-dev joystick python-pygame
+cd ~
+wget http://www.pabr.org/sixlinux/sixpair.c
+gcc -o sixpair sixpair.c -lusb
+
 sudo apt-get install libudev-dev libusb-1.0-0 libusb-1.0-0-dev build-essential git
 sudo apt-get install bluez-utils bluez-compat bluez-hcidump checkinstall libusb-dev libbluetooth-dev joystick
 install npm/node
 npm install -g node-gyp node-pre-gyp
 
 npm install node-hid --driver=hidraw --build-from-source
+
+
+05:B5:9A:84:63:25
 
