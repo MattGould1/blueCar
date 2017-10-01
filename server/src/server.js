@@ -209,8 +209,8 @@ sio.on('connection', function (socket) {
 /*
     finally start listening for outside requests
 */
-server.listen(3000, function () {
-	console.log('app is listening on port 3000')
-})
+// server.listen(3000, function () {
+// 	console.log('app is listening on port 3000')
+// })
 
 export default app
