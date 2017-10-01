@@ -20,7 +20,13 @@ console.log(device.getDeviceInfo())
 console.log(device.getFeatureReport())
 
 noble.state = 'poweredOn'
-noble.startScanning();
+var serviceUUIDs = []
+noble.startScanning(serviceUUIDs, false, (err) => {
+    console.log(serviceUUIDs);
+});
+
+
+setInterval(() => { console.log(serviceUUIDs) }, 3000)
 
 
 /*
